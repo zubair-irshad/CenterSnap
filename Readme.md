@@ -12,9 +12,9 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 Code coming soon!
 
 <p align="center">
-<img src="demo/CS_Pose.gif" width="100%">
+<img src="demo/POSE_CS.gif" width="100%">
 </p>
 
 <p align="center">
-<img src="demo/CS_Method.gif" width="100%">
+<img src="demo/Method_CS.gif" width="100%">
 </p>
