@@ -9,6 +9,10 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 
 [[Project Page](https://zubair-irshad.github.io/projects/robo-vln.html)] [[arXiv](https://arxiv.org/abs/2104.10674)] [[GitHub](https://github.com/GT-RIPL/robo-vln)] 
 
+<a href="https://www.tri.global/" target="_blank">
+ <img align="right" src="/media/tri-logo.png" width="20%"/>
+</a>
+
 Code coming soon!
 
 <p align="center">
@@ -18,3 +22,41 @@ Code coming soon!
 <p align="center">
 <img src="demo/Method_CS.gif" width="100%">
 </p>
+
+
+## Environment
+
+Create a python 3.8 virtual environment and install requirements:
+
+```bash
+cd $SIMNET_REPO
+conda create -y --prefix ./env python=3.8
+./env/bin/python -m pip install --upgrade pip
+./env/bin/python -m pip install -r frozen_requirements.txt
+```
+
+#### Datasets
+
+Download and untar train+val datasets
+[simnet2021a.tar](https://tri-robotics-public.s3.amazonaws.com/github/simnet/datasets/simnet2021a.tar)
+(18GB, md5 checksum:`b8e1d3cb7200b44b1de223e87141f14b`). This file contains all the training and
+validation you need to replicate our small objects results.
+
+```bash
+cd $SIMNET_REPO
+wget https://tri-robotics-public.s3.amazonaws.com/github/simnet/datasets/simnet2021a.tar -P datasets
+tar xf datasets/simnet2021a.tar -C datasets
+```
+
+
+### Train and Validate
+
+Overfit test:
+```bash
+./runner.sh net_train.py @config/net_config_overfit.txt
+```
+
+Full training run (requires 12GB GPU memory)
+```bash
+./runner.sh net_train.py @config/net_config.txt
+```
