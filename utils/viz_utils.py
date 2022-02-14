@@ -156,7 +156,6 @@ def show_projected_points(color_img, pcd_array):
         plt.scatter(points_2d_mesh[:,0], points_2d_mesh[:,1], color=color[i], s=2)
     plt.gca().invert_yaxis()
     plt.axis('off')
-    # plt.imshow(color_img[...,::-1])
     fig.canvas.draw()
     color_img = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
     color_img = color_img.reshape(fig.canvas.get_width_height()[::-1] + (3,))

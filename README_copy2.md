@@ -31,20 +31,12 @@ Create a python 3.8 virtual environment and install requirements:
 cd $SIMNET_REPO
 conda create -y --prefix ./env python=3.8
 ./env/bin/python -m pip install --upgrade pip
-./env/bin/python -m pip install -r requirements.txt
+./env/bin/python -m pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
 #### Datasets
 
-Download and untar train+val datasets
-[simnet2021a.tar](https://tri-robotics-public.s3.amazonaws.com/github/simnet/datasets/simnet2021a.tar)
-(18GB, md5 checksum:`b8e1d3cb7200b44b1de223e87141f14b`). This file contains all the training and
-validation you need to replicate our small objects results.
-
-```bash
-cd $SIMNET_REPO
-wget https://tri-robotics-public.s3.amazonaws.com/github/simnet/datasets/simnet2021a.tar -P datasets
-tar xf datasets/simnet2021a.tar -C datasets
+Coming soon!
 ```
 
 

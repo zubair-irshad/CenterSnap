@@ -1,3 +1,4 @@
+open3d
 absl-py==0.13.0
 backcall==0.2.0
 boto3==1.18.1
@@ -79,5 +80,4 @@ wcwidth==0.2.5
 Werkzeug==2.0.1
 ydiff==1.2
 zstandard==0.15.2
-open3d
 plotly==5.6.0
