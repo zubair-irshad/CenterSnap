@@ -1,3 +1,4 @@
+--checkpoint=../nocs_test_subset/checkpoint/centersnap_real.ckpt
 --max_steps=380000
 --model_file=models/panoptic_net.py
 --model_name=res_fpn

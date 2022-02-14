@@ -68,8 +68,9 @@ tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
 tifffile==2021.7.2
 fvcore
-#torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
-#torchvision==0.8.2+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+notebook
+torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+torchvision==0.8.2+cu101 -f https://download.pytorch.org/whl/torch_stable.html
 tqdm==4.61.2
 traitlets==5.0.5
 urllib3==1.26.6
@@ -79,3 +80,4 @@ Werkzeug==2.0.1
 ydiff==1.2
 zstandard==0.15.2
 open3d
+plotly==5.6.0

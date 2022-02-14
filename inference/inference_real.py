@@ -44,10 +44,11 @@ def inference(
   _CAMERA = camera.NOCS_Real()
   min_confidence = 0.50
 
-  data_path = data_path[400:]
+  data_path = data_path[1050:]
   for i, img_path in enumerate(data_path):
 
     img_full_path = os.path.join(data_dir, 'Real', img_path)
+    print("img_full_path", img_full_path)
     color_path = img_full_path + '_color.png' 
     if not os.path.exists(color_path):
       continue
@@ -149,12 +150,12 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(fromfile_prefix_chars='@')
   common.add_train_args(parser)
   app_group = parser.add_argument_group('app')
-  app_group.add_argument('--app_output', default='inference', type=str)
+  app_group.add_argument('--app_output', default='inference_best', type=str)
   app_group.add_argument('--result_name', default='centersnap_nocs', type=str)
   app_group.add_argument('--data_dir', default='nocs_data', type=str)
 
-
   hparams = parser.parse_args()
+  print(hparams)
   result_name = hparams.result_name
   path = 'data/'+result_name
   output_path = pathlib.Path(path) / hparams.app_output

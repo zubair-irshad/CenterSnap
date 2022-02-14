@@ -10,6 +10,7 @@ from matplotlib.cm import get_cmap
 import copy
 from visualization.line_set import LineMesh
 import colorsys
+import plotly.graph_objects as go
 
 def line_set_mesh(points_array):
   open_3d_lines = [
@@ -56,11 +57,6 @@ def line_set(points_array):
       points=o3d.utility.Vector3dVector(points_array),
       lines=o3d.utility.Vector2iVector(open_3d_lines),
   )
-  # print("points", points_array.shape)
-  # print("lines", np.array(open_3d_lines).shape)
-  # open_3d_lines = np.array(open_3d_lines)
-  # line_set = LineMesh(points_array, open_3d_lines,colors=colors, radius=0.001)
-  # line_set = line_set.cylinder_segments
   line_set.colors = o3d.utility.Vector3dVector(colors)
   return line_set
 
@@ -134,6 +130,39 @@ def visualize_projected_points_only(color_img, pcd_array):
     plt.imshow(color_img)
     plt.show()
 
+def show_projected_points(color_img, pcd_array):
+    open_3d_lines = [
+        [5, 3],
+        [6, 4],
+        [0, 2],
+        [1, 7],
+        [0, 3],
+        [1, 6],
+        [2, 5],
+        [4, 7],
+        [0, 1],
+        [6, 3],
+        [4, 5],
+        [2, 7],
+    ]
+    fig = plt.figure()
+    edges_corners = [[0, 1], [0, 2], [0, 4], [1, 3], [1, 5], [2, 3], [2, 6], [3, 7], [4, 5], [4, 6], [5, 7], [6, 7]]
+    plt.xlim((0, color_img.shape[1]))
+    plt.ylim((0, color_img.shape[0]))
+    # Projections
+    plt.imshow(color_img[...,::-1])
+    color = ['g', 'y', 'b', 'r', 'm', 'c', '#3a7c00', '#3a7cd9', '#8b7cd9', '#211249']
+    for i, points_2d_mesh in enumerate(pcd_array):
+        plt.scatter(points_2d_mesh[:,0], points_2d_mesh[:,1], color=color[i], s=2)
+    plt.gca().invert_yaxis()
+    plt.axis('off')
+    # plt.imshow(color_img[...,::-1])
+    fig.canvas.draw()
+    color_img = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
+    color_img = color_img.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+    plt.show()
+    return color_img
+
 
 def save_projected_points(color_img, pcd_array, output_path, uid):
     open_3d_lines = [
@@ -175,14 +204,10 @@ def random_colors(N, bright=True):
     return colors
 
 def visualize(detections, img, classes, seg_mask, object_key_to_name, filename):
-    # print(classes)
     colors = random_colors(len(classes))
     fig, ax = plt.subplots(1, figsize=(10,7.5))
     plt.axis('off')
     ax.imshow(cv2.cvtColor(img.astype(np.uint8), cv2.COLOR_BGR2RGB))
-    # ax.imshow(img)
-    # plt.show()
-    # ax.show(img)
     if detections is not None:
         # unique_labels = detections[:, -1].cpu().unique()
         # n_cls_preds = len(unique_labels)
@@ -298,13 +323,11 @@ def viz_inv_depth(inv_depth, normalizer=None, percentile=95,
         # if len(inv_depth.shape) == 3:
         #     inv_depth = inv_depth.squeeze(0)
         inv_depth = inv_depth.detach().cpu().numpy()
-    print("inv_depth", inv_depth.shape)
     cm = get_cmap(colormap)
     if normalizer is None:
         normalizer = np.percentile(
             inv_depth[inv_depth > 0] if filter_zeros else inv_depth, percentile)
     inv_depth /= (normalizer + 1e-6)
-    print("inv depth", inv_depth.shape)
     return cm(np.clip(inv_depth, 0., 1.0))[:, :, :3]
 
 
@@ -424,3 +447,64 @@ open_3d_lines = [
 ]
 
 edges_corners = [[0, 1], [0, 2], [0, 4], [1, 3], [1, 5], [2, 3], [2, 6], [3, 7], [4, 5], [4, 6], [5, 7], [6, 7]]
+
+def display_gird(img_vis, depth, peaks_vis):
+    images=[]
+    images.append(np.copy(img_vis)[...,::-1])
+    images.append(np.copy(peaks_vis)[...,::-1])
+    depth_vis = depth2inv(torch.tensor(depth).unsqueeze(0).unsqueeze(0))
+    depth_vis = viz_inv_depth(depth_vis)
+    images.append(np.copy(depth_vis))
+    rows=3
+    img_count = 0
+    print(images[0].shape)
+    fig, axes = plt.subplots(ncols=rows, figsize=(15,15))
+    for i in range(rows):     
+            if img_count < len(images):
+                axes[i].imshow(images[img_count])
+                img_count+=1
+
+def draw_geometries(geometries):
+    graph_objects = []
+
+    for geometry in geometries:
+        geometry_type = geometry.get_geometry_type()
+        
+        if geometry_type == o3d.geometry.Geometry.Type.PointCloud:
+            points = np.asarray(geometry.points)
+            colors = None
+            if geometry.has_colors():
+                colors = np.asarray(geometry.colors)
+            elif geometry.has_normals():
+                colors = (0.5, 0.5, 0.5) + np.asarray(geometry.normals) * 0.5
+            else:
+                geometry.paint_uniform_color((1.0, 0.0, 0.0))
+                colors = np.asarray(geometry.colors)
+
+            scatter_3d = go.Scatter3d(x=points[:,0], y=points[:,1], z=points[:,2], mode='markers', marker=dict(size=1, color=colors))
+            graph_objects.append(scatter_3d)
+
+        if geometry_type == o3d.geometry.Geometry.Type.TriangleMesh:
+            triangles = np.asarray(geometry.triangles)
+            vertices = np.asarray(geometry.vertices)
+            colors = None
+            if geometry.has_triangle_normals():
+                colors = (0.5, 0.5, 0.5) + np.asarray(geometry.triangle_normals) * 0.5
+                colors = tuple(map(tuple, colors))
+            else:
+                colors = (1.0, 0.0, 0.0)
+            
+            mesh_3d = go.Mesh3d(x=vertices[:,0], y=vertices[:,1], z=vertices[:,2], i=triangles[:,0], j=triangles[:,1], k=triangles[:,2], facecolor=colors, opacity=0.50)
+            graph_objects.append(mesh_3d)
+        
+    fig = go.Figure(
+        data=graph_objects,
+        layout=dict(
+            scene=dict(
+                xaxis=dict(visible=False),
+                yaxis=dict(visible=False),
+                zaxis=dict(visible=False)
+            )
+        )
+    )
+    fig.show()
