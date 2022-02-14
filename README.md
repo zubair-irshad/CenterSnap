@@ -12,6 +12,7 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 
 [[Project Page](https://zubair-irshad.github.io/projects/CenterSnap.html)] [[Video](https://www.youtube.com/watch?v=Bg5vi6DSMdM)] [[GitHub](https://github.com/zubair-irshad/CenterSnap)] 
 
+[![Explore CenterSnap in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zubair-irshad/CenterSnap/blob/pre_public/notebook/explore_CenterSnap.ipynb)<br>
 
 Code coming soon!
 
