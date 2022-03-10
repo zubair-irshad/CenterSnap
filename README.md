@@ -30,7 +30,6 @@ Code coming soon!
 If you find this repository useful, please cite our paper:
 
 ```
-
 @inproceedings{irshad2022centersnap,
   title={CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation},
   author={Muhammad Zubair Irshad and Thomas Kollar and Michael Laskey and Kevin Stone and Zsolt Kira},
