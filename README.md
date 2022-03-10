@@ -1,4 +1,4 @@
-# Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation
+# CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation
 <img src="demo/Pytorch_logo.png" width="10%"> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This repository is the pytorch implementation of our paper:
@@ -6,7 +6,7 @@ This repository is the pytorch implementation of our paper:
  <img align="right" src="demo/tri-logo.png" width="20%"/>
 </a>
 
-**Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation**<br>
+**CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation**<br>
 [__***Muhammad Zubair Irshad***__](https://zubairirshad.com), [Thomas Kollar](http://www.tkollar.com/site/), [Michael Laskey](https://www.linkedin.com/in/michael-laskey-4b087ba2/), [Kevin Stone](https://www.linkedin.com/in/kevin-stone-51171270/), [Zsolt Kira](https://faculty.cc.gatech.edu/~zk15/) <br>
 International Conference on Robotics and Automation (ICRA), 2022<br>
 
