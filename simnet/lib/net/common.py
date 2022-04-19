@@ -33,6 +33,7 @@ def add_train_args(parser):
   parser.add_argument("--model_file", type=str, required=True)
   parser.add_argument("--model_name", type=str, required=True)
   parser.add_argument("--checkpoint", default=None, type=str)
+  parser.add_argument("--finetune_real", default=False, type=bool)
   parser.add_argument("--wandb_name", type=str, required=True)
   # Ignore Mask Search.
   parser.add_argument("--min_height", default=0.0, type=float)

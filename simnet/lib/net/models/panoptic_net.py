@@ -7,6 +7,8 @@ from simnet.lib.net.post_processing import segmentation_outputs
 from simnet.lib.net.post_processing import depth_outputs
 from simnet.lib.net.post_processing import pose_outputs
 from simnet.lib.net.post_processing import abs_pose_outputs
+from simnet.lib.net.post_processing import box_outputs
+from simnet.lib.net.post_processing import keypoint_outputs
 
 
 def res_fpn(hparams):
@@ -103,6 +105,49 @@ class OBBHead(nn.Module):
         heatmap_output, latent_emb_output, abs_pose_output, self.hparams
     )
 
+class BoxHead(nn.Module):
+
+  def __init__(self, backbone_output_shape, hparams):
+    super().__init__()
+    self.hparams = hparams
+    self.heatmap_head = SemSegFPNHead(
+        backbone_output_shape,
+        num_classes=1,
+        model_norm=hparams.model_norm,
+        num_filters_scale=hparams.num_filters_scale
+    )
+    self.vertex_head = SemSegFPNHead(
+        backbone_output_shape,
+        num_classes=4,
+        model_norm=hparams.model_norm,
+        num_filters_scale=hparams.num_filters_scale
+    )
+
+  def forward(self, features):
+    heatmap_output = self.heatmap_head.forward(features).squeeze(dim=1)
+    vertex_output = self.vertex_head.forward(features)
+    return box_outputs.BoxOutput(heatmap_output, vertex_output, self.hparams)
+
+
+class KeypointHead(nn.Module):
+
+  def __init__(self, backbone_output_shape, hparams):
+    super().__init__()
+    self.hparams = hparams
+    self.num_keypoints = hparams.num_keypoints
+    self.heatmap_head = SemSegFPNHead(
+        backbone_output_shape,
+        num_classes=self.num_keypoints,
+        model_norm=hparams.model_norm,
+        num_filters_scale=hparams.num_filters_scale
+    )
+    self.activation = nn.Sigmoid()
+
+  def forward(self, features):
+    heatmap_output = self.heatmap_head.forward(features).squeeze(dim=1)
+    heatmap_output = self.activation(heatmap_output)
+    return keypoint_outputs.KeypointOutput(heatmap_output, self.hparams)
+
 class PanopticNet(nn.Module):
 
   def __init__(self, hparams):
@@ -122,6 +167,9 @@ class PanopticNet(nn.Module):
     # Add segmentation head. 6+1 categories for NOCS
     self.seg_head = SegmentationHead(shape, 7, hparams)
     self.pose_head = OBBHead(shape, hparams)
+    self.box_head = BoxHead(shape, hparams)
+    self.keypoint_head = KeypointHead(shape, hparams)
+
 
   def forward(self, image):
     #fine tune only

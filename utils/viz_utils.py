@@ -179,6 +179,7 @@ def save_projected_points(color_img, pcd_array, output_path, uid):
         [2, 7],
     ]
     edges_corners = [[0, 1], [0, 2], [0, 4], [1, 3], [1, 5], [2, 3], [2, 6], [3, 7], [4, 5], [4, 6], [5, 7], [6, 7]]
+    plt.figure()
     plt.xlim((0, color_img.shape[1]))
     plt.ylim((0, color_img.shape[0]))
     # Projections
@@ -187,7 +188,7 @@ def save_projected_points(color_img, pcd_array, output_path, uid):
         plt.scatter(points_2d_mesh[:,0], points_2d_mesh[:,1], color=color[i], s=2)
     plt.gca().invert_yaxis()
     plt.axis('off')
-    plt.imshow(color_img)
+    plt.imshow(color_img[:,:,::-1])
     plt.savefig(output_path +'/projection'+str(uid)+'.png')
 
 def random_colors(N, bright=True):

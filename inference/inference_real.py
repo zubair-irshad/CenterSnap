@@ -20,6 +20,7 @@ from utils.transform_utils import get_gt_pointclouds, transform_coordinates_3d, 
 from utils.transform_utils import project
 from utils.viz_utils import save_projected_points, draw_bboxes, line_set_mesh
 
+import time
 def get_auto_encoder(model_path):
   emb_dim = 128
   n_pts = 2048
@@ -40,15 +41,12 @@ def inference(
   model.eval()
   if use_gpu:
     model.cuda()
-  data_path = open(os.path.join(data_dir, 'Real', 'test_list_all.txt')).read().splitlines()
+  data_path = open(os.path.join(data_dir, 'Real', 'test_list_subset.txt')).read().splitlines()
   _CAMERA = camera.NOCS_Real()
   min_confidence = 0.50
 
-  data_path = data_path[1050:]
   for i, img_path in enumerate(data_path):
-
     img_full_path = os.path.join(data_dir, 'Real', img_path)
-    print("img_full_path", img_full_path)
     color_path = img_full_path + '_color.png' 
     if not os.path.exists(color_path):
       continue
@@ -59,8 +57,8 @@ def inference(
     input = input[None, :, :, :]
     if use_gpu:
       input = input.to(torch.device('cuda:0'))
-    _, _, _ , pose_output = model.forward(input)
     with torch.no_grad():
+      _, _, _ , pose_output = model.forward(input)
       latent_emb_outputs, abs_pose_outputs, img_output, _, _ = pose_output.compute_pointclouds_and_poses(min_confidence,is_target = False)
 
     auto_encoder_path = os.path.join(data_dir, 'ae_checkpoints', 'model_50_nocs.pth')
@@ -88,8 +86,6 @@ def inference(
 
     for j in range(len(latent_emb_outputs)):
         emb = latent_emb_outputs[j]
-
-
         emb = latent_emb_outputs[j]
         emb = torch.FloatTensor(emb).unsqueeze(0)
         emb = emb.cuda()
@@ -131,7 +127,7 @@ def inference(
     
     if not write_pcd:
       o3d.visualization.draw_geometries(rotated_pcds)
-      save_projected_points(img_vis, points_2d, str(output_path), i)
+      save_projected_points(np.copy(img_vis), points_2d, str(output_path), i)
       
       colors_box = [(63, 237, 234)]
       im = np.array(np.copy(img_vis)).copy()
