@@ -164,6 +164,8 @@ def disp_map_visualize(x, max_disp=_MAX_DISP):
   valid = ((x < max_disp) & np.isfinite(x) & (x> min_disp))
   if valid.sum() == 0 or x.sum() ==0 or x[valid].sum() ==0:
     return np.zeros_like(x).astype(np.uint8)
+  if np.min(x[valid]) == np.max(x[valid]):
+    return np.zeros_like(x).astype(np.uint8)
   x -= np.min(x[valid])
   x /= np.max(x[valid])
   x = 1. - x
