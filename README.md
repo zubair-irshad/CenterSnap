@@ -1,5 +1,6 @@
 # CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation
-<img src="demo/Pytorch_logo.png" width="10%"> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/centersnap-single-shot-multi-object-3d-shape/6d-pose-estimation-using-rgbd-on-real275)](https://paperswithcode.com/sota/6d-pose-estimation-using-rgbd-on-real275?p=centersnap-single-shot-multi-object-3d-shape)
+<img src="demo/Pytorch_logo.png" width="10%"> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/centersnap-single-shot-multi-object-3d-shape/6d-pose-estimation-using-rgbd-on-camera25)](https://paperswithcode.com/sota/6d-pose-estimation-using-rgbd-on-camera25?p=centersnap-single-shot-multi-object-3d-shape)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/centersnap-single-shot-multi-object-3d-shape/6d-pose-estimation-using-rgbd-on-real275)](https://paperswithcode.com/sota/6d-pose-estimation-using-rgbd-on-real275?p=centersnap-single-shot-multi-object-3d-shape)
 
 This repository is the pytorch implementation of our paper:
 <a href="https://www.tri.global/" target="_blank">
@@ -59,6 +60,41 @@ Download a small NOCS Real subset from [[here](https://www.dropbox.com/s/yfenvre
 
 ```bash
 ./runner.sh inference/inference_real.py @configs/net_config.txt --data_dir path_to_nocs_test_subset --checkpoint checkpoint_path_here
+```
+
+You should see the **visualizations** saved in ```results/CenterSnap```. Change the --ouput_path in *config.txt to save them to a different folder
+
+## FAQ
+
+**1.** I am getting ```no cuda GPUs available``` while running colab. 
+
+- Ans: Make sure to follow this instruction to activate GPUs in colab:
+
+```
+Make sure that you have enabled the GPU under Runtime-> Change runtime type!
+```
+
+**2.** I am getting ```raise RuntimeError('received %d items of ancdata' %
+RuntimeError: received 0 items of ancdata``` 
+
+- Ans: Increase ulimit to 2048 or 8096 via ```uimit -n 2048```
+
+```
+Make sure that you have enabled the GPU under Runtime-> Change runtime type!
+```
+
+**3.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` 
+
+- Ans: Check your pytorch installation with your cuda installation. Try the following:
+
+
+1. Installing cuda 10.1 and running the same script in requirements.txt
+
+2. Installing the relevant pytorch cuda version i.e. changing this line in the requirements.txt
+
+```
+torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+torchvision==0.8.2+cu101 -f https://download.pytorch.org/whl/torch_stable.html 
 ```
 
 ## Citation
