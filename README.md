@@ -1,6 +1,5 @@
 # CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation
 <img src="demo/Pytorch_logo.png" width="10%"> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/centersnap-single-shot-multi-object-3d-shape/6d-pose-estimation-using-rgbd-on-camera25)](https://paperswithcode.com/sota/6d-pose-estimation-using-rgbd-on-camera25?p=centersnap-single-shot-multi-object-3d-shape)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/centersnap-single-shot-multi-object-3d-shape/6d-pose-estimation-using-rgbd-on-real275)](https://paperswithcode.com/sota/6d-pose-estimation-using-rgbd-on-real275?p=centersnap-single-shot-multi-object-3d-shape)
 
 This repository is the pytorch implementation of our paper:
 <a href="https://www.tri.global/" target="_blank">
@@ -23,7 +22,31 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 <img src="demo/Method_CS.gif" width="100%">
 </p>
 
-## Environment
+## Citation
+
+If you find this repository useful, please consider citing:
+
+```
+@inproceedings{irshad2022centersnap,
+  title={CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation},
+  author={Muhammad Zubair Irshad and Thomas Kollar and Michael Laskey and Kevin Stone and Zsolt Kira},
+  journal={IEEE International Conference on Robotics and Automation (ICRA)},
+  year={2022},
+  url={https://arxiv.org/abs/2203.01929},
+}
+```
+
+### Contents
+<div class="toc">
+<ul>
+<li><a href="#-environment">💻 Environment</a></li>
+<li><a href="#-dataset">📊 Dataset</a></li>
+<li><a href="#-training-and-validate">✨ Training and Inference</a></li>
+<li><a href="#-faqs">📝 FAQ</a></li>
+</ul>
+</div>
+
+## 💻 Environment
 
 Create a python 3.8 virtual environment and install requirements:
 
@@ -36,11 +59,11 @@ conda activate ./env/
 ```
 The code was built and tested on **cuda 10.1**
 
-## Datasets
+## 📊 Dataset
 
 Coming soon!
 
-## Train and Validate
+## ✨ Training and Inference
 
 Train on NOCS Synthetic (requires 13GB GPU memory):
 ```bash
@@ -62,7 +85,7 @@ Download a small NOCS Real subset from [[here](https://www.dropbox.com/s/yfenvre
 
 You should see the **visualizations** saved in ```results/CenterSnap```. Change the --ouput_path in *config.txt to save them to a different folder
 
-## FAQ
+## 📝 FAQ
 
 **1.** I am getting ```no cuda GPUs available``` while running colab. 
 
@@ -93,20 +116,6 @@ Make sure that you have enabled the GPU under Runtime-> Change runtime type!
 ```
 torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
 torchvision==0.8.2+cu101 -f https://download.pytorch.org/whl/torch_stable.html 
-```
-
-## Citation
-
-If you find this repository useful, please cite our paper:
-
-```
-@inproceedings{irshad2022centersnap,
-  title={CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation},
-  author={Muhammad Zubair Irshad and Thomas Kollar and Michael Laskey and Kevin Stone and Zsolt Kira},
-  journal={IEEE International Conference on Robotics and Automation (ICRA)},
-  year={2022},
-  url={https://arxiv.org/abs/2203.01929},
-}
 ```
 
 ## Acknowledgments
