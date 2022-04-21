@@ -47,7 +47,7 @@ Train on NOCS Synthetic (requires 13GB GPU memory):
 ./runner.sh net_train.py @configs/net_config.txt
 ```
 
-Finetune on NOCS Real Train:
+Finetune on NOCS Real Train (Note that good results can be obtained after finetuning on the Real train set for only a few epochs i.e. 1-5):
 ```bash
 ./runner.sh net_train.py @configs/net_config_real_resume.txt --checkpoint \path\to\best\checkpoint
 ```

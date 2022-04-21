@@ -2,7 +2,7 @@
 --finetune_real=True
 --model_file=models/panoptic_net.py
 --model_name=res_fpn
---output=results/CenterSnap
+--output=results/CenterSnap_FinetuneReal
 --train_path=s3://mmt-learning-data/simnet/output/zubair_panoptic_NOCS_Real_train_complete
 --train_batch_size=32
 --train_num_workers=5
