@@ -15,8 +15,6 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 
 [![Explore CenterSnap in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zubair-irshad/CenterSnap/blob/pre_public/notebook/explore_CenterSnap.ipynb)<br>
 
-Code coming soon!
-
 <p align="center">
 <img src="demo/POSE_CS.gif" width="100%">
 </p>
@@ -49,12 +47,12 @@ Train on NOCS Synthetic (requires 13GB GPU memory):
 ./runner.sh net_train.py @configs/net_config.txt
 ```
 
-Finetune on NOCS Real:
+Finetune on NOCS Real Train:
 ```bash
 ./runner.sh net_train.py @configs/net_config_real_resume.txt --checkpoint \path\to\best\checkpoint
 ```
  
-Inference on a NOCS Real Subset
+Inference on a NOCS Real Test Subset
 
 Download a small NOCS Real subset from [[here](https://www.dropbox.com/s/yfenvre5fhx3oda/nocs_test_subset.tar.gz?dl=1)]
 
