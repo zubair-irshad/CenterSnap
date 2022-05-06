@@ -81,3 +81,5 @@ Werkzeug==2.0.1
 ydiff==1.2
 zstandard==0.15.2
 plotly==5.6.0
+argparse
+h5py

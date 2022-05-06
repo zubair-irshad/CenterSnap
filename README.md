@@ -65,23 +65,27 @@ Coming soon!
 
 ## ✨ Training and Inference
 
-Train on NOCS Synthetic (requires 13GB GPU memory):
+1. Train on NOCS Synthetic (requires 13GB GPU memory):
 ```bash
 ./runner.sh net_train.py @configs/net_config.txt
 ```
 
-Finetune on NOCS Real Train (Note that good results can be obtained after finetuning on the Real train set for only a few epochs i.e. 1-5):
+2. Finetune on NOCS Real Train (Note that good results can be obtained after finetuning on the Real train set for only a few epochs i.e. 1-5):
 ```bash
 ./runner.sh net_train.py @configs/net_config_real_resume.txt --checkpoint \path\to\best\checkpoint
 ```
  
-Inference on a NOCS Real Test Subset
+3. Inference on a NOCS Real Test Subset
 
 Download a small NOCS Real subset from [[here](https://www.dropbox.com/s/yfenvre5fhx3oda/nocs_test_subset.tar.gz?dl=1)]
 
 ```bash
 ./runner.sh inference/inference_real.py @configs/net_config.txt --data_dir path_to_nocs_test_subset --checkpoint checkpoint_path_here
 ```
+
+4. Optional (Shape Auto-Encoder Pre-training)
+
+We provide pretrained model for shape auto-encoder pre-training to be used for data collection and inference. Although our codebase doesn't require separately training the shape auto-encoder, if you would like to do so, we provide additional scripts under **external/shape_pretraining**
 
 You should see the **visualizations** saved in ```results/CenterSnap```. Change the --ouput_path in *config.txt to save them to a different folder
 
