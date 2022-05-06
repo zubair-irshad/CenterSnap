@@ -70,8 +70,8 @@ tensorboard-plugin-wit==1.8.0
 tifffile==2021.7.2
 fvcore
 notebook
-torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
-torchvision==0.8.2+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+torch==1.7.1
+torchvision==0.8.2
 tqdm==4.61.2
 traitlets==5.0.5
 urllib3==1.26.6

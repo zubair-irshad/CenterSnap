@@ -57,7 +57,7 @@ conda activate ./env/
 ./env/bin/python -m pip install --upgrade pip
 ./env/bin/python -m pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
 ```
-The code was built and tested on **cuda 10.1**
+The code was built and tested on **cuda 10.2**
 
 ## 📊 Dataset
 
@@ -83,11 +83,12 @@ Download a small NOCS Real subset from [[here](https://www.dropbox.com/s/yfenvre
 ./runner.sh inference/inference_real.py @configs/net_config.txt --data_dir path_to_nocs_test_subset --checkpoint checkpoint_path_here
 ```
 
+You should see the **visualizations** saved in ```results/CenterSnap```. Change the --ouput_path in *config.txt to save them to a different folder
+
 4. Optional (Shape Auto-Encoder Pre-training)
 
-We provide pretrained model for shape auto-encoder pre-training to be used for data collection and inference. Although our codebase doesn't require separately training the shape auto-encoder, if you would like to do so, we provide additional scripts under **external/shape_pretraining**
+We provide pretrained model for shape auto-encoder to be used for data collection and inference. Although our codebase doesn't require separately training the shape auto-encoder, if you would like to do so, we provide additional scripts under **external/shape_pretraining**
 
-You should see the **visualizations** saved in ```results/CenterSnap```. Change the --ouput_path in *config.txt to save them to a different folder
 
 ## 📝 FAQ
 
@@ -121,6 +122,9 @@ Make sure that you have enabled the GPU under Runtime-> Change runtime type!
 torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
 torchvision==0.8.2+cu101 -f https://download.pytorch.org/whl/torch_stable.html 
 ```
+
+**4.** I am seeing zero val metrics in ***wandb***
+- Ans: Make sure you threshold the metrics. Since pytorch lightning's first validation check metric is high, it seems like all other metrics are zero. Please threshold manually to remove the outlier metric in wandb to see actual metrics.   
 
 ## Acknowledgments
 * This code is built upon the implementation from [SimNet](https://github.com/ToyotaResearchInstitute/simnet)
