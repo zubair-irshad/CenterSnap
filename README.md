@@ -19,6 +19,10 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 </p>
 
 <p align="center">
+<img src="demo/reconstruction.gif" width="100%">
+</p>
+
+<p align="center">
 <img src="demo/Method_CS.gif" width="100%">
 </p>
 
@@ -61,7 +65,39 @@ The code was built and tested on **cuda 10.2**
 
 ## 📊 Dataset
 
-Coming soon!
+
+1. Download pre-processed dataset
+
+2. To prepare your own dataset
+
+Download [camera_train](http://download.cs.stanford.edu/orion/nocs/camera_train.zip), [camera_val](http://download.cs.stanford.edu/orion/nocs/camera_val25K.zip),
+[real_train](http://download.cs.stanford.edu/orion/nocs/real_train.zip), [real_test](http://download.cs.stanford.edu/orion/nocs/real_test.zip),
+[ground-truth annotations](http://download.cs.stanford.edu/orion/nocs/gts.zip),
+[camera_composed_depth](http://download.cs.stanford.edu/orion/nocs/camera_composed_depth.zip)
+and [mesh models](http://download.cs.stanford.edu/orion/nocs/obj_models.zip)
+provided by [NOCS](https://github.com/hughw19/NOCS_CVPR2019).<br/>
+Unzip and organize these files in $ROOT/data as follows:
+```
+data
+├── CAMERA
+│   ├── train
+│   └── val
+├── Real
+│   ├── train
+│   └── test
+├── camera_full_depths
+│   ├── train
+│   └── val
+├── gts
+│   ├── val
+│   └── real_test
+└── obj_models
+    ├── train
+    ├── val
+    ├── real_train
+    └── real_test
+```
+Run python scripts to prepare the datasets.
 
 ## ✨ Training and Inference
 
