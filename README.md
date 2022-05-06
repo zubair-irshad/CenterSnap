@@ -114,13 +114,13 @@ Make sure that you have enabled the GPU under Runtime-> Change runtime type!
 - Ans: Check your pytorch installation with your cuda installation. Try the following:
 
 
-1. Installing cuda 10.1 and running the same script in requirements.txt
+1. Installing cuda 10.2 and running the same script in requirements.txt
 
 2. Installing the relevant pytorch cuda version i.e. changing this line in the requirements.txt
 
 ```
-torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
-torchvision==0.8.2+cu101 -f https://download.pytorch.org/whl/torch_stable.html 
+torch==1.7.1
+torchvision==0.8.2
 ```
 
 **4.** I am seeing zero val metrics in ***wandb***
