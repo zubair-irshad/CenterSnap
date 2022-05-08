@@ -17,50 +17,6 @@ from simnet.lib.depth_noise import DepthManager
 from simnet.lib.net.models.auto_encoder import PointCloudAE
 from PIL import Image
 
-DATASET_NAME = 'zubair_NOCS_vis'
-
-DATASET_DIR = pathlib.Path(f'data/{DATASET_NAME}')
-DATASET_DIR.mkdir(parents=True, exist_ok=True)
-DATASET = datapoint.make_dataset(f's3://mmt-learning-data/simnet/output/{DATASET_NAME}')
-
-
-def convert_points_to_homopoints(points):
-  """Project 3d points (3xN) to 4d homogenous points (4xN)"""
-  assert len(points.shape) == 2
-  assert points.shape[0] == 3
-  points_4d = np.concatenate([
-      points,
-      np.ones((1, points.shape[1])),
-  ], axis=0)
-  assert points_4d.shape[1] == points.shape[1]
-  assert points_4d.shape[0] == 4
-  return points_4d
-
-def convert_homopoints_to_points(points_4d):
-  """Project 4d homogenous points (4xN) to 3d points (3xN)"""
-  assert len(points_4d.shape) == 2
-  assert points_4d.shape[0] == 4
-  points_3d = points_4d[:3, :] / points_4d[3:4, :]
-  assert points_3d.shape[1] == points_3d.shape[1]
-  assert points_3d.shape[0] == 3
-  return points_3d
-
-def align_rotation(R):
-    """ Align rotations for symmetric objects.
-    Args:
-        sRT: 4 x 4
-    """
-
-    theta_x = R[0, 0] + R[2, 2]
-    theta_y = R[0, 2] - R[2, 0]
-    r_norm = math.sqrt(theta_x**2 + theta_y**2)
-    s_map = np.array([[theta_x/r_norm, 0.0, -theta_y/r_norm],
-                      [0.0,            1.0,  0.0           ],
-                      [theta_y/r_norm, 0.0,  theta_x/r_norm]])
-    rotation = R @ s_map
-    return rotation
-
-
 def create_img_list(data_dir):
     """ Create train/val/test data list for CAMERA and Real. """
     # CAMERA dataset
@@ -94,6 +50,20 @@ def create_img_list(data_dir):
                 f.write("%s\n" % img_path)
     print('Write all data paths to file done!')
 
+def align_rotation(R):
+    """ Align rotations for symmetric objects.
+    Args:
+        sRT: 4 x 4
+    """
+
+    theta_x = R[0, 0] + R[2, 2]
+    theta_y = R[0, 2] - R[2, 0]
+    r_norm = math.sqrt(theta_x**2 + theta_y**2)
+    s_map = np.array([[theta_x/r_norm, 0.0, -theta_y/r_norm],
+                      [0.0,            1.0,  0.0           ],
+                      [theta_y/r_norm, 0.0,  theta_x/r_norm]])
+    rotation = R @ s_map
+    return rotation
 
 def process_data(img_path, depth):
     """ Load instance masks for the objects in the image. """
@@ -551,6 +521,11 @@ def get_latent_embeddings(point_clouds, estimator):
     return latent_embeddings
 
 
+DATASET_NAME = 'NOCS_Processed_Data'
+DATASET_DIR = pathlib.Path(f'data/{DATASET_NAME}')
+DATASET_DIR.mkdir(parents=True, exist_ok=True)
+_DATASET = datapoint.make_dataset(f'file://{DATASET_DIR}')
+
 if __name__ == '__main__':
   data_dir = '/home/zubairirshad/object-deformnet/data'
   emb_dim = 128
@@ -563,6 +538,7 @@ if __name__ == '__main__':
   estimator.load_state_dict(torch.load(model_path))
   estimator.eval()
 
+  create_img_list(data_dir)
   annotate_camera_train(data_dir, estimator)
-  annotate_real_train(data_dir, estimator)
-  annotate_test_data(data_dir, estimator)
+#   annotate_real_train(data_dir, estimator)
+#   annotate_test_data(data_dir, estimator)

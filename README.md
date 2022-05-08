@@ -10,7 +10,7 @@ This repository is the pytorch implementation of our paper:
 [__***Muhammad Zubair Irshad***__](https://zubairirshad.com), [Thomas Kollar](http://www.tkollar.com/site/), [Michael Laskey](https://www.linkedin.com/in/michael-laskey-4b087ba2/), [Kevin Stone](https://www.linkedin.com/in/kevin-stone-51171270/), [Zsolt Kira](https://faculty.cc.gatech.edu/~zk15/) <br>
 International Conference on Robotics and Automation (ICRA), 2022<br>
 
-[[Project Page](https://zubair-irshad.github.io/projects/CenterSnap.html)] [[arXiv](https://arxiv.org/abs/2203.01929)] [[PDF](https://arxiv.org/pdf/2203.01929.pdf)] [[Video](https://www.youtube.com/watch?v=Bg5vi6DSMdM)] [[GitHub](https://github.com/zubair-irshad/CenterSnap)] 
+[[Project Page](https://zubair-irshad.github.io/projects/CenterSnap.html)] [[arXiv](https://arxiv.org/abs/2203.01929)] [[PDF](https://arxiv.org/pdf/2203.01929.pdf)] [[Video](https://www.youtube.com/watch?v=Bg5vi6DSMdM)] [[Poster](https://zubair-irshad.github.io/projects/resources/Poster%7CCenterSnap%7CICRA2022.pdf)] 
 
 [![Explore CenterSnap in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zubair-irshad/CenterSnap/blob/pre_public/notebook/explore_CenterSnap.ipynb)<br>
 
@@ -76,7 +76,7 @@ Download [camera_train](http://download.cs.stanford.edu/orion/nocs/camera_train.
 [camera_composed_depth](http://download.cs.stanford.edu/orion/nocs/camera_composed_depth.zip)
 and [mesh models](http://download.cs.stanford.edu/orion/nocs/obj_models.zip)
 provided by [NOCS](https://github.com/hughw19/NOCS_CVPR2019).<br/>
-Unzip and organize these files in $ROOT/data as follows:
+Unzip and organize these files in $CenterSnap_Repo/data as follows:
 ```
 data
 ├── CAMERA
@@ -91,6 +91,8 @@ data
 ├── gts
 │   ├── val
 │   └── real_test
+├── auto_encoder_model
+│   ├── model_50_nocs.pth
 └── obj_models
     ├── train
     ├── val
