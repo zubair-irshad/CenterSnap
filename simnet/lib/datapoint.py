@@ -52,7 +52,6 @@ class ABSPOSE:
   heat_map: np.ndarray
   latent_emb: np.ndarray
   abs_pose: np.ndarray
-  classes: np.ndarray
 
 
 #Struct for Stereo Representation

@@ -16,6 +16,7 @@ from simnet.lib.net.pre_processing import obb_inputs
 from simnet.lib.depth_noise import DepthManager
 from simnet.lib.net.models.auto_encoder import PointCloudAE
 from PIL import Image
+import argparse
 
 def create_img_list(data_dir):
     """ Create train/val/test data list for CAMERA and Real. """
@@ -144,28 +145,31 @@ def process_data(img_path, depth):
 
 
 def annotate_camera_train(data_dir, estimator):
+    DATASET_NAME = 'NOCS_Data'
+    DATASET_DIR = pathlib.Path(f'data/{DATASET_NAME}')
+    DATASET_DIR.mkdir(parents=True, exist_ok=True)
+    _DATASET = datapoint.make_dataset(f'file://{DATASET_DIR}/CAMERA/train')
 
     _camera = camera.NOCS_Camera()
     """ Generate gt labels for CAMERA train data. """
     camera_train = open(os.path.join(data_dir, 'CAMERA', 'train_list_all.txt')).read().splitlines()
     intrinsics = np.array([[577.5, 0, 319.5], [0, 577.5, 239.5], [0, 0, 1]])
     # meta info for re-label mug category
-    with open(os.path.join(data_dir, 'obj_models/mug_meta_new.pkl'), 'rb') as f:
+    with open(os.path.join(data_dir, 'obj_models/mug_meta.pkl'), 'rb') as f:
         mug_meta = cPickle.load(f)
 
     #TEST MODELS
-    obj_model_dir = '/home/zubairirshad/object-deformnet/data/obj_models'
-    with open(os.path.join(obj_model_dir, 'camera_trainnew.pkl'), 'rb') as f:
+    obj_model_dir = os.path.join(data_dir, 'obj_models')
+    with open(os.path.join(obj_model_dir, 'camera_train.pkl'), 'rb') as f:
         obj_models = cPickle.load(f)
-
-    i = len(camera_train)//20
-    num = 11
-    camera_train = camera_train[(num)*i:(num+1)*i]
+    # i = len(camera_train)//20
+    # num = 11
+    # camera_train = camera_train[(num)*i:(num+1)*i]
     valid_img_list = []
     for img_path in tqdm(camera_train):
         img_full_path = os.path.join(data_dir, 'CAMERA', img_path)
         depth_composed_path = img_path+'_composed.png'
-        depth_full_path = os.path.join(data_dir, 'camera_composed_depth','camera_full_depths', depth_composed_path)
+        depth_full_path = os.path.join(data_dir,'camera_full_depths', depth_composed_path)
         all_exist = os.path.exists(img_full_path + '_color.png') and \
                     os.path.exists(img_full_path + '_coord.png') and \
                     os.path.exists(img_full_path + '_depth.png') and \
@@ -173,6 +177,7 @@ def annotate_camera_train(data_dir, estimator):
                     os.path.exists(img_full_path + '_meta.txt')
         if not all_exist:
             continue
+        print("depth_full_path", depth_full_path)
         depth = load_depth(depth_full_path)
         masks, coords, class_ids, instance_ids, model_list, bboxes = process_data(img_full_path, depth)
         if instance_ids is None:
@@ -195,8 +200,6 @@ def annotate_camera_train(data_dir, estimator):
         #get latent embeddings
         model_points = [obj_models[model_list[i]].astype(np.float32) for i in range(len(class_ids))]
         latent_embeddings = get_latent_embeddings(model_points, estimator)
-
-        # print("time until latent embedding ", time.time()-start_time)
         #get poses 
         abs_poses=[]
         seg_mask = np.zeros([_camera.height, _camera.width])
@@ -244,6 +247,12 @@ def annotate_camera_train(data_dir, estimator):
         ### Finish writing datapoint
 
 def annotate_real_train(data_dir, estimator):
+
+    DATASET_NAME = 'NOCS_Data'
+    DATASET_DIR = pathlib.Path(f'data/{DATASET_NAME}')
+    DATASET_DIR.mkdir(parents=True, exist_ok=True)
+    _DATASET = datapoint.make_dataset(f'file://{DATASET_DIR}/Real/train')
+
     """ Generate gt labels for Real train data through PnP. """
     _camera = camera.NOCS_Real()
     real_train = open(os.path.join(data_dir, 'Real/train_list_all.txt')).read().splitlines()
@@ -259,8 +268,8 @@ def annotate_real_train(data_dir, estimator):
     with open(os.path.join(data_dir, 'obj_models/mug_meta.pkl'), 'rb') as f:
         mug_meta = cPickle.load(f)
     #TEST MODELS
-    obj_model_dir = '/home/zubairirshad/object-deformnet/data/obj_models'
-    with open(os.path.join(obj_model_dir, 'real_train4096.pkl'), 'rb') as f:
+    obj_model_dir = os.path.join(data_dir, 'obj_models')
+    with open(os.path.join(obj_model_dir, 'real_train.pkl'), 'rb') as f:
         obj_models = cPickle.load(f)
 
     valid_img_list = []
@@ -358,18 +367,22 @@ def annotate_real_train(data_dir, estimator):
         _DATASET.write(panoptic_datapoint)
         ### Finish writing datapoint
 
-def annotate_test_data(data_dir, estimator):
+def annotate_test_data(data_dir, estimator, source, subset):
     """ Generate gt labels for test data.
         Properly copy handle_visibility provided by NOCS gts.
     """
-
+    DATASET_NAME = 'NOCS_Data'
+    DATASET_DIR = pathlib.Path(f'data/{DATASET_NAME}')
+    DATASET_DIR.mkdir(parents=True, exist_ok=True)
+    _DATASET = datapoint.make_dataset(f'file://{DATASET_DIR}/{source}/{subset}')
+    
     _camera = camera.NOCS_Real()
     camera_val = open(os.path.join(data_dir, 'CAMERA', 'val_list_all.txt')).read().splitlines()
     real_test = open(os.path.join(data_dir, 'Real', 'test_list_all.txt')).read().splitlines()
     camera_intrinsics = np.array([[577.5, 0, 319.5], [0, 577.5, 239.5], [0, 0, 1]])
     real_intrinsics = np.array([[591.0125, 0, 322.525], [0, 590.16775, 244.11084], [0, 0, 1]])
     # compute model size
-    model_file_path = ['obj_models/camera_valnew.pkl', 'obj_models/real_testnew.pkl']
+    model_file_path = ['obj_models/camera_val.pkl', 'obj_models/real_test.pkl']
     models = {}
     for path in model_file_path:
         with open(os.path.join(data_dir, path), 'rb') as f:
@@ -378,18 +391,22 @@ def annotate_test_data(data_dir, estimator):
     for key in models.keys():
         model_sizes[key] = 2 * np.amax(np.abs(models[key]), axis=0)
     # meta info for re-label mug category
-    with open(os.path.join(data_dir, 'obj_models/mug_meta_new.pkl'), 'rb') as f:
+    with open(os.path.join(data_dir, 'obj_models/mug_meta.pkl'), 'rb') as f:
         mug_meta = cPickle.load(f)
 
     #TEST MODELS
-    obj_model_dir = '/home/zubairirshad/object-deformnet/data/obj_models'
-    with open(os.path.join(obj_model_dir, 'real_testvis.pkl'), 'rb') as f:
-        obj_models = cPickle.load(f)
-    subset_meta = [('Real', real_test, real_intrinsics, 'test')]
+    # obj_model_dir = os.path.join(data_dir, 'obj_models')
+    # with open(os.path.join(obj_model_dir, 'real_test.pkl'), 'rb') as f:
+    #     obj_models = cPickle.load(f)
+    
+    if source == 'CAMERA':
+        subset_meta = [('CAMERA', camera_val, camera_intrinsics, 'val')]
+    else:
+        subset_meta = [('Real', real_test, real_intrinsics, 'test')]
     # subset_meta = [('CAMERA', camera_val, camera_intrinsics, 'val'), ('Real', real_test, real_intrinsics, 'test')]
     for source, img_list, intrinsics, subset in subset_meta:
         valid_img_list = []
-        img_list = np.array(img_list)[np.array([2, 500, 1000, 1500, 1700, 1300, 2000, 2300, 2350, 2750])].tolist()
+        # img_list = np.array(img_list)[np.array([2, 500, 1000, 1500, 1700, 1300, 2000, 2300, 2350, 2750])].tolist()
         for img_path in tqdm(img_list):
             img_full_path = os.path.join(data_dir, source, img_path)
             all_exist = os.path.exists(img_full_path + '_color.png') and \
@@ -466,7 +483,7 @@ def annotate_test_data(data_dir, estimator):
 
             ### GET CENTERPOINT DATAPOINTS
             #get latent embeddings
-            model_points = [obj_models[model_list[i]].astype(np.float32) for i in range(len(class_ids))]
+            model_points = [models[model_list[i]].astype(np.float32) for i in range(len(class_ids))]
             latent_embeddings = get_latent_embeddings(model_points, estimator)
             #get poses 
             abs_poses=[]
@@ -520,25 +537,31 @@ def get_latent_embeddings(point_clouds, estimator):
         latent_embeddings.append(emb)
     return latent_embeddings
 
-
-DATASET_NAME = 'NOCS_Processed_Data'
-DATASET_DIR = pathlib.Path(f'data/{DATASET_NAME}')
-DATASET_DIR.mkdir(parents=True, exist_ok=True)
-_DATASET = datapoint.make_dataset(f'file://{DATASET_DIR}')
-
 if __name__ == '__main__':
-  data_dir = '/home/zubairirshad/object-deformnet/data'
+
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--data_dir', type=str, required=True)
+  args = parser.parse_args()
+  data_dir = args.data_dir
+
   emb_dim = 128
   n_cat = 57
   n_pts = 2048
 
-  model_path = str(pathlib.Path(__file__).parent.parent.parent / 'data' / 'auto_encoder_model' / 'model_50_nocs.pth')
+  model_path = os.path.join(data_dir, 'auto_encoder_model', 'model_50_nocs.pth')
   estimator = PointCloudAE(emb_dim, n_pts)
   estimator.cuda()
   estimator.load_state_dict(torch.load(model_path))
   estimator.eval()
-
+  
+  print("Generating image lists")
   create_img_list(data_dir)
+  print("Image lists generated...\n")
+  print("Generating Camera Train data...")
   annotate_camera_train(data_dir, estimator)
-#   annotate_real_train(data_dir, estimator)
-#   annotate_test_data(data_dir, estimator)
+  print("Generating Real Train data...")
+  annotate_real_train(data_dir, estimator)
+  print("Generating Camera Val data...")
+  annotate_test_data(data_dir, estimator, 'CAMERA', 'val')
+  print("Generating Real Test data...")
+  annotate_test_data(data_dir, estimator, 'Real', 'test')

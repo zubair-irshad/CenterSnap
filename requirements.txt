@@ -69,7 +69,6 @@ tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
 tifffile==2021.7.2
 fvcore
-notebook
 torch==1.7.1
 torchvision==0.8.2
 tqdm==4.61.2

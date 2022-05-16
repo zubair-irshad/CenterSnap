@@ -65,41 +65,32 @@ The code was built and tested on **cuda 10.2**
 
 ## 📊 Dataset
 
-
 1. Download pre-processed dataset
 
-2. To prepare your own dataset
+We recommend downloading the preprocessed dataset to train and evaluate CenterSnap model. Download and untar [Synthetic](https://tri-robotics-public.s3.amazonaws.com/centersnap/CAMERA.tar.gz) (868GB) and [Real](https://tri-robotics-public.s3.amazonaws.com/centersnap/Real.tar.gz) (70GB) datasets. These files contains all the training and validation you need to replicate our results.
 
-Download [camera_train](http://download.cs.stanford.edu/orion/nocs/camera_train.zip), [camera_val](http://download.cs.stanford.edu/orion/nocs/camera_val25K.zip),
-[real_train](http://download.cs.stanford.edu/orion/nocs/real_train.zip), [real_test](http://download.cs.stanford.edu/orion/nocs/real_test.zip),
-[ground-truth annotations](http://download.cs.stanford.edu/orion/nocs/gts.zip),
-[camera_composed_depth](http://download.cs.stanford.edu/orion/nocs/camera_composed_depth.zip)
-and [mesh models](http://download.cs.stanford.edu/orion/nocs/obj_models.zip)
-provided by [NOCS](https://github.com/hughw19/NOCS_CVPR2019).<br/>
-Unzip and organize these files in $CenterSnap_Repo/data as follows:
+```
+cd $CenterSnap_REPO/data
+wget https://tri-robotics-public.s3.amazonaws.com/centersnap/CAMERA.tar.gz
+tar -xzvf CAMERA.tar.gz
+
+wget https://tri-robotics-public.s3.amazonaws.com/centersnap/Real.tar.gz
+tar -xzvf Real.tar.gz
+```
+
+The data directory structure should follow:
+
 ```
 data
 ├── CAMERA
 │   ├── train
-│   └── val
+│   └── val_subset
 ├── Real
 │   ├── train
-│   └── test
-├── camera_full_depths
-│   ├── train
-│   └── val
-├── gts
-│   ├── val
-│   └── real_test
-├── auto_encoder_model
-│   ├── model_50_nocs.pth
-└── obj_models
-    ├── train
-    ├── val
-    ├── real_train
-    └── real_test
+└── └── test
 ```
-Run python scripts to prepare the datasets.
+
+2. To prepare your own dataset, we provide additional scripts under [prepare_data](https://github.com/zubair-irshad/CenterSnap/prepare_data).
 
 ## ✨ Training and Inference
 
@@ -107,6 +98,8 @@ Run python scripts to prepare the datasets.
 ```bash
 ./runner.sh net_train.py @configs/net_config.txt
 ```
+
+Note than *runner.sh* is equivalent to using *python* to run the script. Additionally it sets up the PYTHONPATH and CenterSnap Enviornment Path automatically. 
 
 2. Finetune on NOCS Real Train (Note that good results can be obtained after finetuning on the Real train set for only a few epochs i.e. 1-5):
 ```bash
@@ -147,7 +140,7 @@ RuntimeError: received 0 items of ancdata```
 Make sure that you have enabled the GPU under Runtime-> Change runtime type!
 ```
 
-**3.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` 
+**3.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` or ``` You requested GPUs: [0] But your machine only has: [] ``` 
 
 - Ans: Check your pytorch installation with your cuda installation. Try the following:
 

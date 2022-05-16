@@ -14,7 +14,7 @@ conda install -c conda-forge -c fvcore -c iopath fvcore iopath
 ### Dataset Prepration
 1. Download [object models](http://download.cs.stanford.edu/orion/nocs/obj_models.zip) provided by [NOCS](https://github.com/hughw19/NOCS_CVPR2019)
 
-2. Download NOCS [preprocess data](https://www.dropbox.com/s/yfenvre5fhx3oda/nocs_test_subset.tar.gz?dl=1)
+2. Download NOCS [preprocess data](https://www.dropbox.com/s/8im9fzopo71h6yw/nocs_preprocess.tar.gz?dl=1)
 
 Unzip and organize these files in $CenterSnap/data as follows:
 ```
