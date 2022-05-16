@@ -19,10 +19,6 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 </p>
 
 <p align="center">
-<img src="demo/reconstruction.gif" width="100%">
-</p>
-
-<p align="center">
 <img src="demo/Method_CS.gif" width="100%">
 </p>
 
@@ -108,6 +104,10 @@ Note than *runner.sh* is equivalent to using *python* to run the script. Additio
  
 3. Inference on a NOCS Real Test Subset
 
+<p align="center">
+<img src="demo/reconstruction.gif" width="100%">
+</p>
+
 Download a small NOCS Real subset from [[here](https://www.dropbox.com/s/yfenvre5fhx3oda/nocs_test_subset.tar.gz?dl=1)]
 
 ```bash
@@ -135,10 +135,6 @@ Make sure that you have enabled the GPU under Runtime-> Change runtime type!
 RuntimeError: received 0 items of ancdata``` 
 
 - Ans: Increase ulimit to 2048 or 8096 via ```uimit -n 2048```
-
-```
-Make sure that you have enabled the GPU under Runtime-> Change runtime type!
-```
 
 **3.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` or ``` You requested GPUs: [0] But your machine only has: [] ``` 
 
