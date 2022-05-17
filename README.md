@@ -155,4 +155,3 @@ torchvision==0.8.2
 
 ## Acknowledgments
 * This code is built upon the implementation from [SimNet](https://github.com/ToyotaResearchInstitute/simnet)
-
