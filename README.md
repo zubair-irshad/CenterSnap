@@ -3,7 +3,7 @@
 
 This repository is the pytorch implementation of our paper:
 <a href="https://www.tri.global/" target="_blank">
- <img align="right" src="demo/tri-logo.png" width="20%"/>
+ <img align="right" src="demo/tri-logo.png" width="25%"/>
 </a>
 
 **CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation**<br>
