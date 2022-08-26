@@ -47,15 +47,14 @@ If you find this repository useful, please consider citing:
 }
 ```
 
+
+
 ### Contents
-<div class="toc">
-<ul>
-<li><a href="#-environment">💻 Environment</a></li>
-<li><a href="#-dataset">📊 Dataset</a></li>
-<li><a href="#-training-and-validate">✨ Training and Inference</a></li>
-<li><a href="#-faqs">📝 FAQ</a></li>
-</ul>
-</div>
+ - [💻 Environment](#-environment)
+ - [📊 Dataset](#-dataset)
+ - [✨ Training and Inference](#-training-and-inference)
+ - [📝 FAQ (**Updated**)](#-faq)
+ 
 
 ## 💻 Environment
 
@@ -134,7 +133,12 @@ We provide pretrained model for shape auto-encoder to be used for data collectio
 
 ## 📝 FAQ
 
-**1.** I am getting ```no cuda GPUs available``` while running colab. 
+**1.** I am not getting good performance on my custom camera images i.e. Realsense, OAK-D or others.
+ 
+- Ans: Since the network was finetuned on the [real-world NOCS data](https://github.com/zubair-irshad/CenterSnap/edit/master/README.md#-training-and-inference) only, currently the pre-trained network gives good 3D prediction for the the following [camera setting](https://github.com/zubair-irshad/CenterSnap/blob/master/simnet/lib/camera.py#L33-L55). To get good prediction on your own camera parameters, make sure to [finetune the network](https://github.com/zubair-irshad/CenterSnap/edit/master/README.md#-training-and-inference) with your own small subset after [pre-training on the synthetic dataset](https://github.com/zubair-irshad/CenterSnap/edit/master/README.md#-training-and-inference). We provide data preparation scripts [here](https://github.com/zubair-irshad/CenterSnap/tree/master/prepare_data).
+
+
+**2.** I am getting ```no cuda GPUs available``` while running colab. 
 
 - Ans: Make sure to follow this instruction to activate GPUs in colab:
 
@@ -142,12 +146,12 @@ We provide pretrained model for shape auto-encoder to be used for data collectio
 Make sure that you have enabled the GPU under Runtime-> Change runtime type!
 ```
 
-**2.** I am getting ```raise RuntimeError('received %d items of ancdata' %
+**3.** I am getting ```raise RuntimeError('received %d items of ancdata' %
 RuntimeError: received 0 items of ancdata``` 
 
 - Ans: Increase ulimit to 2048 or 8096 via ```uimit -n 2048```
 
-**3.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` or ``` You requested GPUs: [0] But your machine only has: [] ``` 
+**4.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` or ``` You requested GPUs: [0] But your machine only has: [] ``` 
 
 - Ans: Check your pytorch installation with your cuda installation. Try the following:
 
@@ -161,7 +165,7 @@ torch==1.7.1
 torchvision==0.8.2
 ```
 
-**4.** I am seeing zero val metrics in ***wandb***
+**5.** I am seeing zero val metrics in ***wandb***
 - Ans: Make sure you threshold the metrics. Since pytorch lightning's first validation check metric is high, it seems like all other metrics are zero. Please threshold manually to remove the outlier metric in wandb to see actual metrics.   
 
 ## Acknowledgments
