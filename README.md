@@ -51,7 +51,7 @@ If you find this repository useful, please consider citing:
 
 ### Contents
  - [💻 Environment](#-environment)
- - [📊 Dataset](#-dataset)
+ - [📊 Dataset (**Updated**)](#-dataset)
  - [✨ Training and Inference](#-training-and-inference)
  - [📝 FAQ (**Updated**)](#-faq)
  
@@ -70,6 +70,8 @@ conda activate ./env/
 The code was built and tested on **cuda 10.2**
 
 ## 📊 Dataset
+
+**New Update**: Please checkout the distributed script of our new ECCV'22 work [**ShAPO**](https://github.com/zubair-irshad/shapo#-dataset) if you'd like to collect your own data from scratch in a couple of hours. That distributed script collects the data in the same format as required by **CenterSnap**, although with a few minor modications as mentioned in that [repo](https://github.com/zubair-irshad/shapo#-dataset). 
 
 1. Download pre-processed dataset
 
