@@ -14,6 +14,14 @@ International Conference on Robotics and Automation (ICRA), 2022<br>
 
 [![Explore CenterSnap in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zubair-irshad/CenterSnap/blob/master/notebook/explore_CenterSnap.ipynb)<br>
 
+Follow-up ECCV'22 work:
+
+**ShAPO: Implicit Representations for Multi-Object Shape, Appearance and Pose Optimization**<br>
+[__***Muhammad Zubair Irshad***__](https://zubairirshad.com), [Sergey Zakharov](https://zakharos.github.io/), [Rares Ambrus](https://www.tri.global/about-us/dr-rares-ambrus), [Thomas Kollar](http://www.tkollar.com/site/), [Zsolt Kira](https://faculty.cc.gatech.edu/~zk15/), [Adrien Gaidon](https://adriengaidon.com/) <br>
+European Conference on Computer Vision (ECCV), 2022<br>
+
+[[Project Page](https://zubair-irshad.github.io/projects/ShAPO.html)] [[arXiv](https://arxiv.org/abs/2207.13691)] [[PDF](https://arxiv.org/pdf/2207.13691.pdf)] [[Video](https://youtu.be/LMg7NDcLDcA)] [[Poster](https://zubair-irshad.github.io/projects/resources/Poster%7CCenterSnap%7CICRA2022.pdf)] 
+
 
 <p align="center">
 <img src="demo/Pose_CS.gif" width="100%">
