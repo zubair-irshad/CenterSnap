@@ -62,6 +62,7 @@ If you find this repository useful, please consider citing:
  - [📊 Dataset (**Updated**)](#-dataset)
  - [✨ Training and Inference](#-training-and-inference)
  - [📝 FAQ (**Updated**)](#-faq)
+ - [🙌 Follow-up works (**Updated**)](#follow-up-works)
  
 
 ## 💻 Environment
@@ -178,15 +179,16 @@ torchvision==0.8.2
 **5.** I am seeing zero val metrics in ***wandb***
 - Ans: Make sure you threshold the metrics. Since pytorch lightning's first validation check metric is high, it seems like all other metrics are zero. Please threshold manually to remove the outlier metric in wandb to see actual metrics.   
 
+## Follow-up-works
+* Our follow-up ECCV work: 
+    * [ShAPO:tophat:: Implicit Representations for Multi Object Shape Appearance and Pose Optimization, ECCV, 2022](https://zubair-irshad.github.io/projects/ShAPO.html)
+
+* Other follow-up works (Shout-out to the authors for great work):
+    * Articulated Objects: [CARTO: Category and Joint Agnostic Reconstruction of ARTiculated Objects, CVPR, 2023](http://carto.cs.uni-freiburg.de/)
+    * Grasping: [Real-time Simultaneous Multi-Object 3D Shape Reconstruction, 6DoF Pose Estimation and Dense Grasp Prediction](https://arxiv.org/abs/2305.09510)
+
 ## Acknowledgments
 * This code is built upon the implementation from [SimNet](https://github.com/ToyotaResearchInstitute/simnet)
-
-## Related Work
-* [ShAPO:tophat:: Implicit Representations for Multi Object Shape Appearance and Pose Optimization, ECCV, 2022](https://zubair-irshad.github.io/projects/ShAPO.html)
-
-<p align="center">
-<img src="demo/ShAPO_teaser.gif" width="100%">
-</p>
 
 ## Licenses
 * The source code is released under the [MIT license](https://opensource.org/licenses/MIT).
