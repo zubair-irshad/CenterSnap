@@ -148,8 +148,12 @@ We provide pretrained model for shape auto-encoder to be used for data collectio
  
 - Ans: Since the network was finetuned on the [real-world NOCS data](https://github.com/zubair-irshad/CenterSnap/edit/master/README.md#-training-and-inference) only, currently the pre-trained network gives good 3D prediction for the the following [camera setting](https://github.com/zubair-irshad/CenterSnap/blob/master/simnet/lib/camera.py#L33-L55). To get good prediction on your own camera parameters, make sure to [finetune the network](https://github.com/zubair-irshad/CenterSnap/edit/master/README.md#-training-and-inference) with your own small subset after [pre-training on the synthetic dataset](https://github.com/zubair-irshad/CenterSnap/edit/master/README.md#-training-and-inference). We provide data preparation scripts [here](https://github.com/zubair-irshad/CenterSnap/tree/master/prepare_data).
 
+**2.** How to generate good zero-shot results on HSR robot camera:
 
-**2.** I am getting ```no cuda GPUs available``` while running colab. 
+ - Ans: Please see **the answer to FAQ1 above** for best results. An alternate solution that we employed to do a [quick demo on HSR robot](https://zubair-irshad.github.io/projects/ShAPO.html) is to warp the rgb-d observarions coming out of HSR robot camera or any other custom camera such that they match the intrinsics of the NOCS real camera (which we finetune our model on). This way one can get decent results with only finetuning on NOCS real dataset. Please see [this answer](https://github.com/zubair-irshad/shapo/issues/17#issuecomment-1620592107) and the corresponding [gist here](https://gist.github.com/zubair-irshad/a6ddbef3b4112a259b463794502f8f27) for the code.
+
+
+**3.** I am getting ```no cuda GPUs available``` while running colab. 
 
 - Ans: Make sure to follow this instruction to activate GPUs in colab:
 
@@ -157,12 +161,12 @@ We provide pretrained model for shape auto-encoder to be used for data collectio
 Make sure that you have enabled the GPU under Runtime-> Change runtime type!
 ```
 
-**3.** I am getting ```raise RuntimeError('received %d items of ancdata' %
+**4.** I am getting ```raise RuntimeError('received %d items of ancdata' %
 RuntimeError: received 0 items of ancdata``` 
 
 - Ans: Increase ulimit to 2048 or 8096 via ```uimit -n 2048```
 
-**4.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` or ``` You requested GPUs: [0] But your machine only has: [] ``` 
+**5.** I am getting ``` RuntimeError: CUDA error: no kernel image is available for execution on the device``` or ``` You requested GPUs: [0] But your machine only has: [] ``` 
 
 - Ans: Check your pytorch installation with your cuda installation. Try the following:
 
@@ -176,7 +180,7 @@ torch==1.7.1
 torchvision==0.8.2
 ```
 
-**5.** I am seeing zero val metrics in ***wandb***
+**6.** I am seeing zero val metrics in ***wandb***
 - Ans: Make sure you threshold the metrics. Since pytorch lightning's first validation check metric is high, it seems like all other metrics are zero. Please threshold manually to remove the outlier metric in wandb to see actual metrics.   
 
 ## Follow-up-works
