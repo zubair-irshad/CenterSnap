@@ -47,7 +47,7 @@ If you find this repository useful, please consider citing:
 }
 
 @inproceedings{irshad2022shapo,
-  title={ShAPO: Implicit Representations for Multi Object Shape Appearance and Pose Optimization},
+  title={ShAPO: Implicit Representations for Multi-Object Shape Appearance and Pose Optimization},
   author={Muhammad Zubair Irshad and Sergey Zakharov and Rares Ambrus and Thomas Kollar and Zsolt Kira and Adrien Gaidon},
   journal={European Conference on Computer Vision (ECCV)},
   year={2022},
