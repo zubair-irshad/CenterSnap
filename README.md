@@ -185,11 +185,12 @@ torchvision==0.8.2
 
 ## Follow-up-works
 * Our follow-up ECCV work: 
-    * [ShAPO:tophat:: Implicit Representations for Multi Object Shape Appearance and Pose Optimization, ECCV, 2022](https://zubair-irshad.github.io/projects/ShAPO.html)
+    * [ShAPO: Implicit Representations for Multi Object Shape Appearance and Pose Optimization, ECCV, 2022](https://zubair-irshad.github.io/projects/ShAPO.html)
 
 * Other follow-up works (Shout-out to the authors for great work):
     * Articulated Objects: [CARTO: Category and Joint Agnostic Reconstruction of ARTiculated Objects, CVPR, 2023](http://carto.cs.uni-freiburg.de/)
     * Grasping: [Real-time Simultaneous Multi-Object 3D Shape Reconstruction, 6DoF Pose Estimation and Dense Grasp Prediction](https://arxiv.org/abs/2305.09510)
+    * More Grasping + real-world experiments: [CenterGrasp: Object-Aware Implicit Representation Learning for Simultaneous Shape Reconstruction and 6-DoF Grasp Estimation](https://arxiv.org/pdf/2312.08240.pdf) 
 
 ## Acknowledgments
 * This code is built upon the implementation from [SimNet](https://github.com/ToyotaResearchInstitute/simnet)
