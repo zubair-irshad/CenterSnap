@@ -74,9 +74,14 @@ cd $CenterSnap_Repo
 conda create -y --prefix ./env python=3.8
 conda activate ./env/
 ./env/bin/python -m pip install --upgrade pip
-./env/bin/python -m pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
+./env/bin/python -m pip install -r requirements.txt 
 ```
-The code was built and tested on **cuda 10.2**
+
+Install ```torch==1.7.1 torchvision==0.8.2``` based on your CUDA version. The code was built and tested on **cuda 10.2**. A sample command to install torch on cuda 10.2 is as follows:
+
+```bash
+pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2
+```
 
 ## 📊 Dataset
 

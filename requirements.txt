@@ -69,8 +69,6 @@ tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
 tifffile==2021.7.2
 fvcore
-torch==1.7.1
-torchvision==0.8.2
 tqdm==4.61.2
 traitlets==5.0.5
 urllib3==1.26.6
