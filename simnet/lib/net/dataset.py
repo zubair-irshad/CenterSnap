@@ -49,7 +49,7 @@ class Dataset(Dataset):
     super().__init__()
     if datapoint_dataset is None:
       datapoint_dataset = datapoint.make_dataset(dataset_uri)
-    self.datapoint_handles = datapoint_dataset.list()
+    self.datapoint_handles = datapoint_dataset.list()[:200]
     # No need to shuffle, already shufled based on random uids
     self.hparams = hparams
     if preprocess_image_func is None:

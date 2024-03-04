@@ -20,6 +20,8 @@ import wandb
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning import loggers
+from pytorch_lightning.profiler import SimpleProfiler
+
 
 from simnet.lib.net import common
 from simnet.lib import datapoint
@@ -69,6 +71,8 @@ if __name__ == "__main__":
   model = PanopticModel(hparams, epochs, train_ds, EvalMethod())
   model_checkpoint = ModelCheckpoint(filepath=hparams.output, save_top_k=-1, period=1, mode='max')
   wandb_logger = loggers.WandbLogger(name=hparams.wandb_name, project='CenterSnap')
+  
+  profiler = SimpleProfiler()
 
   if hparams.finetune_real:
     trainer = pl.Trainer(
@@ -94,6 +98,7 @@ if __name__ == "__main__":
         default_save_path=hparams.output,
         use_amp=False,
         print_nan_grads=True,
+        profiler=profiler
     )
 
   trainer.fit(model)
