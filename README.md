@@ -39,20 +39,19 @@ If you find this repository useful, please consider citing:
 
 ```
 @inproceedings{irshad2022centersnap,
-  title={CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation},
-  author={Muhammad Zubair Irshad and Thomas Kollar and Michael Laskey and Kevin Stone and Zsolt Kira},
-  journal={IEEE International Conference on Robotics and Automation (ICRA)},
-  year={2022},
-  url={https://arxiv.org/abs/2203.01929},
-}
+     title = {CenterSnap: Single-Shot Multi-Object 3D Shape Reconstruction and Categorical 6D Pose and Size Estimation},
+     author = {Muhammad Zubair Irshad and Thomas Kollar and Michael Laskey and Kevin Stone and Zsolt Kira},
+     journal = {IEEE International Conference on Robotics and Automation (ICRA)},
+     year = {2022}
+     }
+
 
 @inproceedings{irshad2022shapo,
-  title={ShAPO: Implicit Representations for Multi-Object Shape Appearance and Pose Optimization},
-  author={Muhammad Zubair Irshad and Sergey Zakharov and Rares Ambrus and Thomas Kollar and Zsolt Kira and Adrien Gaidon},
-  journal={European Conference on Computer Vision (ECCV)},
-  year={2022},
-  url={https://arxiv.org/abs/2207.13691},
-}
+     title = {ShAPO: Implicit Representations for Multi-Object Shape Appearance and Pose Optimization},
+     author = {Muhammad Zubair Irshad and Sergey Zakharov and Rares Ambrus and Thomas Kollar and Zsolt Kira and Adrien Gaidon},
+     journal = {European Conference on Computer Vision (ECCV)},
+     year = {2022}
+     }
 ```
 
 
